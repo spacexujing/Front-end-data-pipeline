@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深蓝紫 · 现代搜索</title>
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0d1b2a, #1b0e2e 70%, #0f0c1f);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* 柔和光晕装饰 */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(90, 40, 180, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(30, 100, 200, 0.12) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+            pointer-events: none;
+        }
+
+        /* 主卡片容器 —— 让内容居中且带有轻微悬浮感 */
+        .main-container {
+            width: 100%;
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ----- 搜索框 + 玻璃效果 ----- */
+        .search-wrapper {
+            width: 100%;
+            background: rgba(22, 30, 55, 0.45);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border-radius: 60px;
+            padding: 6px 6px 6px 28px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+            transition: box-shadow 0.2s ease, background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(130, 100, 255, 0.25);
+            background: rgba(26, 35, 65, 0.55);
+        }
+
+        .search-wrapper i {
+            color: rgba(210, 200, 255, 0.7);
+            font-size: 1.3rem;
+            margin-right: 12px;
+            transition: color 0.2s;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 18px 8px 18px 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #f0eeff;
+            letter-spacing: 0.3px;
+            min-width: 0;
+        }
+
+        .search-wrapper input::placeholder {
+            color: rgba(210, 200, 240, 0.6);
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .search-wrapper input:-ms-input-placeholder {
+            color: rgba(210, 200, 240, 0.6);
+        }
+
+        .search-wrapper input::-ms-input-placeholder {
+            color: rgba(210, 200, 240, 0.6);
+        }
+
+        .search-btn {
+            background: linear-gradient(145deg, #4f3b9e, #2b5f9e);
+            border: none;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            background-size: 200% 200%;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(145deg, #5f4bb0, #3a6fb0);
+            box-shadow: 0 8px 20px rgba(70, 40, 160, 0.4);
+        }
+
+        .search-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ----- 快捷按钮组 (玻璃胶囊) ----- */
+        .quick-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .quick-chip {
+            background: rgba(20, 28, 55, 0.45);
+            backdrop-filter: blur(8px) saturate(160%);
+            -webkit-backdrop-filter: blur(8px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px 24px;
+            border-radius: 60px;
+            color: #e2daff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.3px;
+            flex: 0 1 auto;
+        }
+
+        .quick-chip i {
+            color: #b6a5ff;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .quick-chip:hover {
+            background: rgba(55, 60, 120, 0.5);
+            border-color: rgba(160, 140, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+        }
+
+        .quick-chip:hover i {
+            transform: scale(1.1);
+            color: #d1c0ff;
+        }
+
+        .quick-chip:active {
+            transform: translateY(0px) scale(0.96);
+        }
+
+        /* 底部名言区域 (玻璃质感) */
+        .footer-quote {
+            margin-top: 65px;
+            padding: 16px 32px;
+            background: rgba(12, 18, 38, 0.35);
+            backdrop-filter: blur(6px) saturate(120%);
+            -webkit-backdrop-filter: blur(6px) saturate(120%);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            max-width: 90%;
+            transition: all 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-quote p {
+            color: rgba(215, 210, 245, 0.75);
+            font-size: 1rem;
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 0.4px;
+            word-break: break-word;
+            line-height: 1.5;
+        }
+
+        .footer-quote i {
+            color: #a08aff;
+            margin: 0 6px;
+            opacity: 0.7;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .search-wrapper {
+                padding: 4px 4px 4px 18px;
+                border-radius: 50px;
+            }
+            .search-wrapper input {
+                font-size: 1rem;
+                padding: 14px 6px 14px 0;
+            }
+            .search-wrapper input::placeholder {
+                font-size: 0.85rem;
+            }
+            .search-btn {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+            }
+            .quick-chip {
+                padding: 10px 18px;
+                font-size: 0.8rem;
+                gap: 6px;
+            }
+            .quick-grid {
+                gap: 10px;
+                margin-top: 30px;
+            }
+            .footer-quote {
+                margin-top: 45px;
+                padding: 12px 18px;
+                max-width: 100%;
+            }
+            .footer-quote p {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .search-wrapper i {
+                display: none;
+            }
+            .search-wrapper input {
+                padding-left: 6px;
+            }
+        }
+
+        /* 隐藏默认的微调 */
+        ::selection {
+            background: #5f4bb0;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <!-- 搜索框 (玻璃圆角) -->
+    <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="आप क्या खोजना चाहते हैं？" aria-label="Search input">
+        <button class="search-btn" id="searchBtn"><i class="fas fa-arrow-right" style="margin-right: 6px;"></i> Search</button>
+    </div>
+
+    <!-- 快捷按钮 (板球 / 工单 / 加密货币) -->
+    <div class="quick-grid">
+        <div class="quick-chip" data-query="today Bangalore cricket match score">
+            <i class="fas fa-baseball-ball"></i> 今天班加罗尔板球赛比分
+        </div>
+        <div class="quick-chip" data-query="check work order status">
+            <i class="fas fa-clipboard-list"></i> 查工单状态
+        </div>
+        <div class="quick-chip" data-query="cryptocurrency market price">
+            <i class="fas fa-coins"></i> 加密货币行情
+        </div>
+    </div>
+
+    <!-- 底部随机名言 (板球/加密货币 中英文混合) -->
+    <div class="footer-quote" id="quoteBox">
+        <p id="quoteText">
+            <i class="fas fa-quote-left"></i> 
+            Cricket is a game of glorious uncertainty. 
+            <i class="fas fa-quote-right"></i>
+        </p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- 名言库 (板球 + 加密货币 中英混杂) -----
+        const quotes = [
+            { text: 'Cricket is a game of glorious uncertainty. 板球是辉煌的未知数。' },
+            { text: 'HODL is not a strategy, but sometimes it’s the only one. 持有不是策略，但有时是唯一的路。' },
+            { text: 'You don’t play for the crowd, you play for the country. — MS Dhoni' },
+            { text: 'Buy the dip, but don’t forget the wicket. 抄底可以，别忘了 wickets。' },
+            { text: 'Form is temporary, class is permanent. 状态是暂时的，实力是永恒的。' },
+            { text: 'Bitcoin fixes this. 比特币解决一切。  — 除非你被 bowled out。' },
+            { text: 'It’s not about the sixes, it’s about the stamina. 不只看六分球，更是耐力。' },
+            { text: 'Not all those who wander are lost — some are just looking for the next altcoin. 徘徊者未必迷路，也许在找下一个山寨币。' },
+            { text: 'Cricket: 22 yards, 2 wickets, endless stories. 22码，三柱门，无尽的故事。' },
+            { text: 'To the moon! 但首先，守住这个 over。' },
+            { text: 'Patience is the key in cricket and crypto. 板球与加密，耐心都是关键。' },
+            { text: 'Sachin Tendulkar: “People throw stones at you. You convert them into milestones.”' },
+            { text: 'When life gives you lemons, trade them for ETH. 生活给你柠檬，换成以太坊。' },
+            { text: 'A century is just 100 runs, but a 100x is forever. 百分只是100分，100倍才是永恒。' },
+        ];
+
+        // ----- 随机名言显示 -----
+        const quoteTextEl = document.getElementById('quoteText');
+        if (quoteTextEl) {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const selected = quotes[randomIndex];
+            // 保留引号样式
+            quoteTextEl.innerHTML = `<i class="fas fa-quote-left"></i> ${selected.text} <i class="fas fa-quote-right"></i>`;
+        }
+
+        // ----- 搜索逻辑 (点击按钮 / 回车) -----
+        const searchInput = document.querySelector('.search-wrapper input');
+        const searchBtn = document.getElementById('searchBtn');
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                // 如果为空，则使用占位符作为搜索词？为了体验，如果空就搜索占位符内容（印地语）
+                // 但更合理：提示或者直接搜索占位符？我们直接拿占位符搜索，但用户可能觉得奇怪。
+                // 改为搜索空字符串？但最好让用户输入。这里如果空，就搜索“आप क्या खोजना चाहते हैं？” 但保留功能
+                const fallback = searchInput.placeholder || 'आप क्या खोजना चाहते हैं？';
+                window.open(`https://www.google.com/search?q=${encodeURIComponent(fallback)}`, '_blank');
+                return;
+            }
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+        }
+
+        // 搜索按钮
+        searchBtn.addEventListener('click', performSearch);
+
+        // 回车键
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        // ----- 快捷按钮: 点击跳转搜索 (直接搜索关键词) -----
+        const chips = document.querySelectorAll('.quick-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', function(e) {
+                const query = this.getAttribute('data-query');
+                if (query) {
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                }
+            });
+        });
+
+        // 额外小细节：如果用户点击 chip 时使用中键或 Ctrl+click 仍然会新标签页打开，没问题。
+        // 同时保持可访问性 (添加光标样式)
+    })();
+</script>
+
+</body>
+</html>
+```
+### 核心功能与操作路径
+您可以像使用任何搜索引擎一样，在搜索框输入内容并搜索。同时，页面上的快捷按钮和随机格言为您提供了更便捷和有趣的体验。
+-   **搜索框**：居中显示，带有圆角玻璃效果。您可以直接输入关键词，然后点击“Search”按钮或按回车键进行搜索。
+-   **快捷按钮**：搜索框下方提供了三个预设搜索按钮，分别对应“板球比分”、“工单状态”和“加密货币行情”。点击任一按钮，将自动跳转至该关键词的搜索结果页。
+-   **随机格言**：页面底部会随机显示一句关于板球或加密货币的格言（中英混合），每次刷新页面都可能不同，为您带来一点小惊喜。

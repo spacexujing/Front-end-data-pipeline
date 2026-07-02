@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>📒 小记 · 求职与日常</title>
+  <!-- 干净简洁，浅蓝+浅粉主色调 -->
+  <style>
+    /* 全局重置 & 字体 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f7f9fc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1e2a3a;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    /* 主容器 — 柔和卡片感 */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(2px);
+      border-radius: 32px;
+      padding: 2.2rem 2rem;
+      box-shadow: 0 10px 28px rgba(142, 168, 205, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(255, 235, 240, 0.3);
+    }
+
+    /* 头部：头像 + 简介 (可编辑区) */
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.8rem 2rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.8rem;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .avatar-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .avatar-img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #eef2f7;
+      box-shadow: 0 6px 14px rgba(173, 192, 215, 0.15);
+      border: 3px solid #ffffff;
+      transition: all 0.15s ease;
+    }
+
+    .avatar-img:hover {
+      box-shadow: 0 8px 20px rgba(173, 192, 215, 0.3);
+    }
+
+    .avatar-edit {
+      font-size: 0.8rem;
+      background: #f0f4fe;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      color: #4f6a8a;
+      cursor: pointer;
+      border: 1px dashed #b5cbe0;
+      transition: 0.1s;
+    }
+
+    .avatar-edit:hover {
+      background: #e3edfe;
+      border-color: #7f9fc7;
+    }
+
+    .intro {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .intro h1 {
+      font-size: 1.9rem;
+      font-weight: 550;
+      letter-spacing: -0.01em;
+      color: #1f2c3c;
+      margin-bottom: 0.25rem;
+    }
+
+    .intro .bio {
+      font-size: 1rem;
+      color: #3e526b;
+      background: #f2f6fd;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      display: inline-block;
+      backdrop-filter: blur(2px);
+      border: 1px solid #e7edf6;
+      margin-top: 0.2rem;
+    }
+
+    .bio-edit {
+      font-size: 0.75rem;
+      margin-left: 0.6rem;
+      color: #7f99bb;
+      cursor: pointer;
+      border-bottom: 1px dotted #b9cee7;
+    }
+
+    .bio-edit:hover {
+      color: #3f6390;
+    }
+
+    /* 颜色主题装饰 — 浅蓝+浅粉点缀 */
+    .tag {
+      background: #e9f0fe;
+      color: #2b4a6b;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 450;
+    }
+
+    .tag-pink {
+      background: #fdeff2;
+      color: #9f6f7a;
+    }
+
+    /* 卡片网格 */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+    }
+
+    .card {
+      background: #ffffffd9;
+      backdrop-filter: blur(2px);
+      border-radius: 24px;
+      padding: 1.6rem 1.8rem;
+      box-shadow: 0 4px 12px rgba(183, 198, 218, 0.08);
+      border: 1px solid rgba(228, 238, 250, 0.6);
+      transition: box-shadow 0.15s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 18px rgba(163, 181, 204, 0.08);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .card-header h2 {
+      font-size: 1.3rem;
+      font-weight: 480;
+      letter-spacing: -0.2px;
+      color: #1e2d42;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card-header h2 i {
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    /* 求职笔记区块 */
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .note-item {
+      background: #f6faff;
+      padding: 0.8rem 1rem;
+      border-radius: 18px;
+      border-left: 6px solid #b7d0f0;
+      border-left-color: #b0cbea;
+      transition: 0.08s;
+    }
+
+    .note-item.pink-border {
+      border-left-color: #f0c8d4;
+      background: #fcf6f8;
+    }
+
+    .note-title {
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .note-date {
+      font-size: 0.7rem;
+      color: #6b83a0;
+      letter-spacing: 0.3px;
+    }
+
+    .note-desc {
+      font-size: 0.9rem;
+      color: #2a3d55;
+      margin-top: 0.2rem;
+    }
+
+    /* b站收藏 + 口语录音 两列布局 (大屏) */
+    .media-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .media-col {
+      flex: 1 1 240px;
+      min-width: 200px;
+    }
+
+    .media-col h3 {
+      font-size: 1rem;
+      font-weight: 480;
+      color: #2c405a;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bili-list {
+      list-style: none;
+    }
+
+    .bili-list li {
+      margin-bottom: 0.6rem;
+    }
+
+    .bili-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f2f8ff;
+      padding: 0.3rem 1rem 0.3rem 0.8rem;
+      border-radius: 40px;
+      text-decoration: none;
+      color: #1f3b5c;
+      font-size: 0.9rem;
+      border: 1px solid #deeaf9;
+      transition: all 0.1s;
+      word-break: break-all;
+    }
+
+    .bili-link:hover {
+      background: #e3efff;
+      border-color: #b0cae9;
+    }
+
+    .bili-link::before {
+      content: "▶";
+      font-size: 0.7rem;
+      color: #e5859b;
+      margin-right: 4px;
+    }
+
+    .audio-item {
+      background: #f8faff;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      border: 1px solid #e2ecf9;
+      margin-bottom: 0.7rem;
+    }
+
+    .audio-label {
+      font-size: 0.85rem;
+      color: #1f2f44;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .audio-label span {
+      background: #f0dae2;
+      border-radius: 30px;
+      padding: 0 0.5rem;
+      font-size: 0.65rem;
+      color: #7c5567;
+    }
+
+    audio {
+      height: 32px;
+      width: 140px;
+      border-radius: 30px;
+      outline: none;
+    }
+
+    audio::-webkit-media-controls-panel {
+      background: #f2f7ff;
+    }
+
+    .microedit {
+      font-size: 0.7rem;
+      color: #7b95b5;
+      margin-left: 0.3rem;
+      cursor: default;
+    }
+
+    .microedit:hover {
+      color: #45658b;
+    }
+
+    /* 追星日常小模块 */
+    .star-notes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.8rem;
+      margin-top: 0.2rem;
+    }
+
+    .star-tag {
+      background: #fcf0f3;
+      color: #8a6372;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      border: 1px solid #f6dae3;
+    }
+
+    .star-tag::before {
+      content: "✨";
+      margin-right: 4px;
+      font-size: 0.7rem;
+    }
+
+    /* 页脚 */
+    .footer-note {
+      margin-top: 2.2rem;
+      text-align: center;
+      color: #7c94b2;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      border-top: 1px solid #eef2f8;
+      padding-top: 1.5rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 540px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      .profile {
+        gap: 1rem;
+      }
+      .intro h1 {
+        font-size: 1.5rem;
+      }
+      .card {
+        padding: 1.2rem 1rem;
+      }
+      audio {
+        width: 120px;
+      }
+    }
+
+    /* 可编辑样式 (模拟) */
+    .editable-placeholder {
+      cursor: pointer;
+      transition: 0.08s;
+    }
+    .editable-placeholder:hover {
+      background: #eef4fd;
+      border-radius: 12px;
+    }
+    .fake-input {
+      background: #ffffff;
+      border: 1px solid #dae3f0;
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      font-size: 0.8rem;
+      color: #1e2f44;
+    }
+    /* 模拟头像上传 */
+    .avatar-edit-input {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- ========= 可编辑头像 & 简介 ========= -->
+  <div class="profile">
+    <div class="avatar-section">
+      <label for="avatarUpload" style="cursor: pointer;">
+        <img src="https://i.pravatar.cc/150?img=32" alt="我的头像" class="avatar-img" id="avatarPreview">
+      </label>
+      <label for="avatarUpload" class="avatar-edit">📷 换头像</label>
+      <input type="file" id="avatarUpload" class="avatar-edit-input" accept="image/*">
+    </div>
+    <div class="intro">
+      <h1 contenteditable="true" class="editable-placeholder" id="nameDisplay">🌱 林小北</h1>
+      <div>
+        <span class="bio" contenteditable="true" id="bioDisplay">🎯 应届生 · 求职中 / 偶尔追星</span>
+        <span class="bio-edit" id="bioEditHint">✎ 编辑</span>
+      </div>
+      <div style="margin-top: 0.6rem; display: flex; gap: 0.3rem; flex-wrap: wrap;">
+        <span class="tag"># 2025 求职</span>
+        <span class="tag tag-pink"># 日常碎片</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========= 主要内容网格 ========= -->
+  <div class="grid">
+    <!-- 求职笔记卡片 -->
+    <div class="card">
+      <div class="card-header">
+        <h2><span>📋</span> 面试复盘 · 求职记录</h2>
+        <span style="font-size:0.75rem; color:#6b85a5;">共 4 篇</span>
+      </div>
+      <div class="note-list">
+        <div class="note-item">
+          <div class="note-title">🐧 腾讯 · 产品运营一面</div>
+          <div class="note-date">2025.03.12</div>
+          <div class="note-desc">群面case：用户增长策略。复盘：注意框架感，数据支撑不足。</div>
+        </div>
+        <div class="note-item pink-border">
+          <div class="note-title">☁️ 阿里云 · 技术文档工程师</div>
+          <div class="note-date">2025.03.08</div>
+          <div class="note-desc">笔试通过，二面深挖项目。强调逻辑和用户视角。</div>
+        </div>
+        <div class="note-item">
+          <div class="note-title">📱 字节跳动 · 内容运营</div>
+          <div class="note-date">2025.02.26</div>
+          <div class="note-desc">hr面聊了职业规划，反问环节要体现热情。</div>
+        </div>
+        <div class="note-item pink-border">
+          <div class="note-title">🎵 网易云音乐 · 社群运营</div>
+          <div class="note-date">2025.02.15</div>
+          <div class="note-desc">群面模拟：活动策划。下次注意时间分配。</div>
+        </div>
+      </div>
+      <div style="margin-top: 0.8rem; font-size:0.8rem; color:#7089aa; background:#f3f9ff; padding:0.2rem 1rem; border-radius:30px; display:inline-block;">✏️ 点击笔记可编辑 (双击修改)</div>
+    </div>
+
+    <!-- B站收藏 + 口语录音 混合卡片 -->
+    <div class="card">
+      <div class="card-header">
+        <h2><span>🔖</span> 收藏 · 练习</h2>
+        <span class="microedit">✎ 可编辑链接和录音名</span>
+      </div>
+      <div class="media-row">
+        <!-- B站收藏列 -->
+        <div class="media-col">
+          <h3><span>📺</span> B站收藏</h3>
+          <ul class="bili-list" id="biliList">
+            <li><a href="https://www.bilibili.com/video/BV1GJ411x7hQ" target="_blank" class="bili-link" contenteditable="false">面试礼仪与技巧</a></li>
+            <li><a href="https://www.bilibili.com/video/BV1cT4y1P7mR" target="_blank" class="bili-link" contenteditable="false">产品经理入门</a></li>
+            <li><a href="https://www.bilibili.com/video/BV1aZ4y1X7kL" target="_blank" class="bili-link" contenteditable="false">英语口语跟读</a></li>
+            <li><a href="https://www.bilibili.com/video/BV1d54y1X7tP" target="_blank" class="bili-link" contenteditable="false">【追星】舞台直拍</a></li>
+          </ul>
+          <div style="font-size:0.7rem; color:#7f98b6; margin-top: 0.2rem;">点击链接跳转 · 双击修改地址</div>
+        </div>
+        <!-- 口语录音列 -->
+        <div class="media-col">
+          <h3><span>🎙️</span> 口语练习录音</h3>
+          <div class="audio-item

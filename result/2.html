@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Teens' Wonder · 时代少年团周边</title>
+    <!-- 圆润字体: 使用得意黑 + 系统圆体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', 'DM Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(145deg, #fff8f9 0%, #ffeef0 100%);
+            color: #5a3e3e;
+            line-height: 1.5;
+            padding: 20px 24px 40px;
+        }
+
+        /* 整体容器 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: rgba(255, 245, 245, 0.6);
+            backdrop-filter: blur(2px);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 32px 40px;
+            box-shadow: 0 20px 40px rgba(245, 175, 180, 0.15);
+            border: 1px solid rgba(255, 220, 225, 0.5);
+        }
+
+        /* 粉嫩渐变标题 / 品牌 */
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .brand h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f8a5b2, #ffb6c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 12px rgba(255, 150, 170, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand h1 small {
+            font-size: 1rem;
+            font-weight: 500;
+            background: #ffd9df;
+            padding: 4px 14px;
+            border-radius: 60px;
+            -webkit-text-fill-color: #7a4a4a;
+            color: #7a4a4a;
+            letter-spacing: 1px;
+        }
+
+        .cart-icon {
+            background: #ffe4e9;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(255, 150, 170, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #ffd2da;
+            color: #683b3b;
+        }
+
+        /* 轮播 + 热销 双栏布局 */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 28px;
+            margin-bottom: 50px;
+        }
+
+        /* 轮播卡片 (宋亚轩大图) */
+        .carousel-card {
+            background: #ffeef0;
+            border-radius: 48px;
+            padding: 20px 20px 24px;
+            box-shadow: 0 12px 28px rgba(250, 150, 160, 0.2);
+            border: 1px solid #ffdae0;
+            transition: all 0.2s;
+        }
+
+        .carousel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding: 0 6px;
+        }
+
+        .carousel-header span {
+            background: #ffd5dc;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #633e3e;
+        }
+
+        .carousel-badge {
+            background: #fec5cd;
+            padding: 4px 14px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .carousel-img {
+            background: #fbd9df;
+            border-radius: 32px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23fcccd4" /><circle cx="200" cy="120" r="60" fill="%23f8b0c0"/><circle cx="170" cy="105" r="12" fill="%23fff3f5"/><circle cx="230" cy="105" r="12" fill="%23fff3f5"/><path d="M160 160 Q200 190 240 160" stroke="%23b3545a" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="150" y="190" width="100" height="40" rx="20" fill="%23f5a0b0"/><text x="200" y="220" font-size="22" fill="%23fff" text-anchor="middle" font-weight="bold" font-family="Quicksand">宋亚轩 · 甜心</text></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            box-shadow: inset 0 -4px 12px rgba(0,0,0,0.02);
+        }
+
+        .carousel-img .placeholder-note {
+            background: rgba(255, 220, 225, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #5f3131;
+            font-size: 1.2rem;
+            border: 1px solid #ffbcc6;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            background: #ffb7c2;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+        .carousel-dot.active {
+            opacity: 1;
+            background: #f28b9a;
+            width: 32px;
+            border-radius: 20px;
+        }
+
+        /* 热销区域 */
+        .hot-side {
+            background: #fff3f5;
+            border-radius: 48px;
+            padding: 22px 22px 18px;
+            border: 1px solid #ffd6de;
+            box-shadow: 0 8px 20px rgba(250, 160, 170, 0.15);
+        }
+
+        .hot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 18px;
+            padding: 0 4px;
+        }
+
+        .hot-header h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #7a4949;
+            letter-spacing: 1px;
+            background: linear-gradient(145deg, #f29dad, #ffb3c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hot-header small {
+            background: #ffdce2;
+            padding: 2px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #5f3a3a;
+        }
+
+        .hot-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .hot-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fff9fa;
+            padding: 10px 16px 10px 12px;
+            border-radius: 40px;
+            transition: all 0.1s ease;
+            border: 1px solid #ffe3e7;
+        }
+
+        .hot-item:hover {
+            background: #ffeef0;
+            transform: scale(0.98);
+        }
+
+        .hot-item-img {
+            width: 60px;
+            height: 60px;
+            background: #fccbd4;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            background: linear-gradient(145deg, #fbc8d2, #fdb8c6);
+            color: #a54f5a;
+            box-shadow: 0 4px 6px rgba(200, 100, 110, 0.1);
+        }
+
+        .hot-item-info {
+            flex: 1;
+        }
+
+        .hot-item-info .title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .hot-item-info .price {
+            font-weight: 600;
+            color: #c15363;
+            background: #ffeaee;
+            display: inline-block;
+            padding: 0 12px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .hot-item .badge {
+            background: #ffb3c1;
+            color: #4d2b2b;
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* 分类导航 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 235, 238, 0.6);
+            backdrop-filter: blur(2px);
+            padding: 16px 24px;
+            border-radius: 80px;
+            margin-bottom: 40px;
+            border: 1px solid #ffd7df;
+        }
+
+        .category-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            background: #fff0f3;
+            padding: 6px 18px 6px 16px;
+            border-radius: 60px;
+            border: 1px solid #ffd2da;
+            transition: all 0.1s;
+            color: #6b4040;
+        }
+
+        .category-item .emoji-bg {
+            font-size: 1.2rem;
+        }
+
+        .category-item:hover {
+            background: #ffe2e8;
+            transform: translateY(-2px);
+            border-color: #fbaab9;
+        }
+
+        .category-divider {
+            width: 1px;
+            height: 30px;
+            background: #fccad3;
+            margin: 0 6px;
+        }
+
+        .member-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+
+        .member-tag {
+            background: #ffe4e9;
+            padding: 4px 18px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid #ffcbd5;
+            color: #653a3a;
+        }
+
+        .member-tag.active {
+            background: #fbb3c0;
+            color: #3f2222;
+            border-color: #f58a9b;
+        }
+
+        /* 粉丝推荐板块 (买家秀) */
+        .fan-faves {
+            margin: 48px 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #f28b9c, #ffaebd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .section-header a {
+            background: #ffd9e0;
+            padding: 6px 22px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #572f2f;
+            font-size: 0.9rem;
+            border: 1px solid #fbb8c6;
+            text-decoration: none;
+        }
+
+        .fan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .fan-card {
+            background: #fff6f8;
+            border-radius: 40px;
+            padding: 18px 16px 20px;
+            border: 1px solid #ffdae2;
+            box-shadow: 0 8px 14px rgba(245, 150, 165, 0.1);
+            transition: 0.15s;
+        }
+
+        .fan-card:hover {
+            transform: translateY(-4px);
+            background: #fffafb;
+        }
+
+        .fan-img {
+            background: #fccfd8;
+            height: 140px;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #fcccd6, #fdb8c8);
+            color: #82464f;
+            font-weight: 500;
+            font-size: 0.9rem;
+            flex-direction: column;
+            margin-bottom: 14px;
+            box-shadow: inset 0 -2px 8px rgba(0,0,0,0.02);
+        }
+
+        .fan-img span {
+            background: rgba(255, 225, 230, 0.7);
+            padding: 4px 14px;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+
+        .fan-card .fan-name {
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fan-card .fan-comment {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 6px 0 4px;
+        }
+
+        .fan-card .fan-likes {
+            font-size: 0.8rem;
+            color: #b1626e;
+        }
+
+        /* 商品占位小提示 */
+        .placeholder-note {
+            background: rgba(255, 200, 210, 0.2);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            color: #784a4a;
+        }
+
+        /* 响应式 */
+        @media (max-width: 780px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 20px 16px;
+            }
+            .brand h1 {
+                font-size: 1.8rem;
+            }
+            .category-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                border-radius: 40px;
+                padding: 20px;
+            }
+            .category-divider {
+                display: none;
+            }
+        }
+
+        /* 点缀小元素 */
+        .sparkle {
+            background: #ffd9df;
+            border-radius: 50%;
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin: 0 4px;
+        }
+
+        hr {
+            border: 1px solid #ffdbe2;
+            margin: 20px 0 10px;
+            opacity: 0.5;
+            border-radius: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 品牌 + 购物车 -->
+    <div class="brand">
+        <h1>
+            ✦ Teens' Wonder
+            <small>时代少年团 · 官方周边</small>
+        </h1>
+        <div class="cart-icon">
+            🛒 <span>购物车</span> <span style="background:#fbb3c0; padding:0 10px; border-radius:40px;">3</span>
+        </div>
+    </div>
+
+    <!-- 轮播 + 热销 hero -->

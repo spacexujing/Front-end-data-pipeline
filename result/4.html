@@ -1,0 +1,226 @@
+<!-- 搜索框组件 -->
+<div class="search-container">
+  <input type="text" id="search" placeholder="Search posts..." class="search-input">
+  <div id="results" class="search-results"></div>
+</div>
+
+<script>
+  // 初始化 Pagefind
+  window.addEventListener('DOMContentLoaded', async () => {
+    const pagefind = await import('/pagefind/pagefind.js');
+    const searchInput = document.getElementById('search');
+    const resultsDiv = document.getElementById('results');
+    
+    searchInput.addEventListener('input', async (e) => {
+      const query = e.target.value;
+      if (query.length < 2) {
+        resultsDiv.innerHTML = '';
+        return;
+      }
+      
+      const search = await pagefind.search(query);
+      resultsDiv.innerHTML = search.results.slice(0, 5).map(result => `
+        <a href="${result.url}" class="search-result-item">
+          <h4>${result.title}</h4>
+          <p>${result.excerpt}</p>
+        </a>
+      `).join('');
+    });
+  });
+</script>
+```
+
+### 3. 邮件订阅组件
+
+```html
+<!-- 订阅表单（使用 Buttondown） -->
+<div class="subscribe-widget">
+  <h3>📬 Stay Updated</h3>
+  <p>Get notified when new posts drop (no spam, ever).</p>
+  <form 
+    action="https://buttondown.email/api/emails/embed-subscribe/your-username"
+    method="post"
+    target="popupwindow"
+    class="subscribe-form"
+  >
+    <input 
+      type="email" 
+      name="email" 
+      placeholder="your-email@example.com" 
+      required
+      class="subscribe-input"
+    />
+    <button type="submit" class="subscribe-btn">Subscribe</button>
+  </form>
+  <small>Your girlfriend will love this 😉</small>
+</div>
+```
+
+### 4. 首页文章摘要
+
+```go
+<!-- Hugo 首页模板 -->
+{{ define "main" }}
+<section class="hero">
+  <h1 class="glow-text">AI Experiments & Random Thoughts</h1>
+  <p class="subtitle">Automation | Cricket | Crypto</p>
+</section>
+
+<section class="recent-posts">
+  <h2>Latest Posts</h2>
+  <div class="post-grid">
+    {{ range first 6 .Pages }}
+    <article class="post-card">
+      <div class="post-meta">
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <span class="category">{{ with .Params.tags }}{{ index . 0 }}{{ end }}</span>
+      </div>
+      <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+      <p class="excerpt">{{ .Summary | truncate 150 }}</p>
+      <div class="post-footer">
+        <a href="{{ .Permalink }}" class="read-more">Read more →</a>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</section>
+
+{{ partial "subscribe.html" . }}
+{{ end }}
+```
+
+## 四、多语言字体支持
+
+```html
+<!-- 在 head 中加载字体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- 文章内容样式 -->
+<style>
+  .post-content {
+    font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.1rem;
+  }
+  
+  /* 印地语特殊调整 */
+  .post-content:lang(hi) {
+    line-height: 2;
+    word-spacing: 2px;
+  }
+</style>
+```
+
+## 五、部署与自动化
+
+### 1. Vercel 配置（vercel.json）
+
+```json
+{
+  "buildCommand": "hugo --gc --minify",
+  "outputDirectory": "public",
+  "framework": "hugo",
+  "rewrites": [
+    { "source": "/pagefind/(.*)", "destination": "/pagefind/$1" }
+  ]
+}
+```
+
+### 2. 自动部署脚本
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy Blog
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+      - run: hugo --gc --minify
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+```
+
+## 六、写作模板
+
+```markdown
+---
+title: "How I Automated My Email Responses with GPT-4"
+date: 2024-01-15
+tags: ["AI", "Automation", "Python"]
+categories: ["AI Tools"]
+draft: false
+---
+
+## The Problem
+
+मुझे हर दिन 50+ ईमेल का जवाब देना होता है...
+
+[English content continues...]
+
+### The Solution
+
+```python
+import openai
+
+def auto_reply(email_content):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": email_content}]
+    )
+    return response.choices[0].message.content
+```
+
+**Results:** Saved 3 hours daily! 🚀
+
+---
+
+*Note for GF: This means I now have more time for chai ☕*
+```
+
+## 七、快速启动命令
+
+```bash
+# 1. 安装 Hugo
+brew install hugo  # macOS
+# 或从 https://gohugo.io/installation/ 下载
+
+# 2. 创建博客
+hugo new site my-ai-blog --format yaml
+cd my-ai-blog
+
+# 3. 添加主题（推荐 PaperMod）
+git init
+git submodule add https://github.com/adityatelange/hugo-PaperMod themes/PaperMod
+
+# 4. 启动开发服务器
+hugo server -D --bind 0.0.0.0
+
+# 5. 构建生产版本
+hugo --gc --minify
+```
+
+## 八、订阅服务设置
+
+**免费方案：Buttondown**
+1. 注册 https://buttondown.email
+2. 创建你的邮件列表
+3. 获取 API 密钥
+4. 粘贴上面的订阅表单代码
+
+**优势：**
+- 前1000订阅者免费
+- 支持自定义域名
+- 自动发送新文章通知
+- 女友只需点击邮件中的确认链接
+
+这个方案完全免费（除了域名），技术感十足又对非技术人员友好。需要我帮你调整任何部分或提供更详细的代码吗？

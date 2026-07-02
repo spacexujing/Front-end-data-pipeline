@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>小星の上网导航 ✨</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #ffe9f4 0%, #ffe0f0 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* 可爱二次元装饰 */
+    body::before {
+      content: "🌸";
+      font-size: 80px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      opacity: 0.25;
+      transform: rotate(-15deg);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "⭐";
+      font-size: 70px;
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      opacity: 0.2;
+      transform: rotate(10deg);
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 60px 60px 60px 60px;
+      padding: 30px 30px 40px;
+      box-shadow: 0 20px 40px rgba(255, 150, 180, 0.25), 0 8px 20px rgba(255, 140, 170, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 马卡龙色系 + 二次元小元素 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #d45a7a;
+      text-shadow: 2px 2px 0 #fbcad9;
+      letter-spacing: 1px;
+    }
+
+    .title span {
+      background: #ffb3c6;
+      padding: 0 12px;
+      border-radius: 40px;
+      font-size: 18px;
+      color: #fff;
+      margin-left: 6px;
+      box-shadow: 0 4px 6px #ffc0d0;
+    }
+
+    .kawaii-char {
+      font-size: 32px;
+      background: #ffd9e6;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px #fbb0c4;
+    }
+
+    /* 搜索框区域 */
+    .search-box {
+      background: #ffffffcc;
+      border-radius: 60px;
+      padding: 6px 6px 6px 24px;
+      display: flex;
+      align-items: center;
+      margin: 10px 0 28px 0;
+      box-shadow: 0 6px 14px #ffc8d8;
+      border: 2px solid #ffe2ed;
+      transition: 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #ff90b0;
+      box-shadow: 0 8px 18px #ffb0c8;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 14px 6px 14px 0;
+      font-size: 18px;
+      outline: none;
+      color: #4f2d3b;
+      font-weight: 500;
+    }
+
+    .search-box input::placeholder {
+      color: #b58294;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .search-box button {
+      background: #ff8da9;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 4px 0 #d46b86;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 1px;
+    }
+
+    .search-box button:hover {
+      background: #ff7090;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #c75d78;
+    }
+
+    .search-box button:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #c75d78;
+    }
+
+    /* 分区标题 */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #a14660;
+      margin: 28px 0 16px 8px;
+      border-left: 6px solid #ff90b0;
+      padding-left: 14px;
+    }
+
+    .section-title i {
+      font-size: 24px;
+    }
+
+    /* 网格导航 ———— 马卡龙可爱按钮 */
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 14px;
+      margin: 0 4px;
+    }
+
+    .link-card {
+      background: #ffffffdd;
+      backdrop-filter: blur(4px);
+      border-radius: 30px;
+      padding: 16px 6px;
+      text-align: center;
+      box-shadow: 0 6px 12px #ffc0d0;
+      transition: 0.15s ease;
+      border: 2px solid #ffdae7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      color: #4d2f3b;
+      font-weight: 500;
+      font-size: 14px;
+      min-height: 80px;
+      word-break: break-word;
+    }
+
+    .link-card:hover {
+      transform: scale(1.02) translateY(-4px);
+      background: #ffffff;
+      border-color: #ff9bb7;
+      box-shadow: 0 12px 18px #ffb0c8;
+    }
+
+    .link-card:active {
+      transform: scale(0.96);
+    }
+
+    .link-card .emoji-big {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .link-card .link-name {
+      background: #ffdae7;
+      padding: 2px 12px;
+      border-radius: 40px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #872f4b;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    /* 特殊两列布局 (用于招聘和追星常用) 但保持统一用grid自适应，加一些额外的卡片 */
+    .double-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .double-group .link-card {
+      flex: 1 1 120px;
+    }
+
+    /* 页脚 */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #b06b80;
+      font-size: 14px;
+      border-top: 2px dashed #ffb7cc;
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer span {
+      background: #ffdae7;
+      padding: 4px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+    }
+
+    /* 响应式 */
+    @media (max-width: 500px) {
+      .container {
+        padding: 20px 16px 30px;
+        border-radius: 40px;
+      }
+      .title {
+        font-size: 22px;
+      }
+      .search-box input {
+        font-size: 16px;
+        padding: 10px 4px;
+      }
+      .search-box button {
+        padding: 10px 18px;
+        font-size: 16px;
+      }
+      .link-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+      }
+      .link-card {
+        padding: 12px 4px;
+        min-height: 70px;
+        font-size: 12px;
+      }
+      .link-card .emoji-big {
+        font-size: 22px;
+      }
+    }
+
+    /* 小装饰 */
+    .deco-dot {
+      display: inline-block;
+      background: #ffb7cc;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin: 0 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 可爱元素 -->
+    <div class="header">
+      <div class="title">
+        ✨ 小星导航 <span>✦ 追光版</span>
+        <span class="deco-dot"></span><span class="deco-dot"></span><span class="deco-dot"></span>
+      </div>
+      <div class="kawaii-char">
+        🐱🎀
+      </div>
+    </div>
+
+    <!-- 百度搜索框 (默认百度) -->
+    <form class="search-box" action="https://www.baidu.com/s" method="GET" target="_blank">
+      <input type="text" name="wd" placeholder="搜索你想逛的… 用百度 ～" aria-label="搜索框" required>
+      <button type="submit">🔍 搜</button>
+    </form>
+
+    <!-- 常用追星 & 冲浪区 -->
+    <div class="section-title">
+      <span>💖 追光 · 日常</span>
+      <span style="font-size: 16px; background: #ffd0dd; padding: 0 12px; border-radius: 30px;">TNT 时代少年团</span>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.bilibili.com" target="_blank" class="link-card">
+        <span class="emoji-big">📺</span>
+        <span>B站</span>
+        <span class="link-name">bilibili</span>
+      </a>
+      <a href="https://weibo.com" target="_blank" class="link-card">
+        <span class="emoji-big">💬</span>
+        <span>微博</span>
+        <span class="link-name">Weibo</span>
+      </a>
+      <a href="https://music.163.com" target="_blank" class="link-card">
+        <span class="emoji-big">🎧</span>
+        <span>网易云音乐</span>
+        <span class="link-name">云村</span>
+      </a>
+      <a href="https://www.xiaohongshu.com" target="_blank" class="link-card">
+        <span class="emoji-big">📕</span>
+        <span>小红书</span>
+        <span class="link-name">RED</span>
+      </a>
+      <!-- 时代少年团超话 (微博超话) -->
+      <a href="https://weibo.com/p/100808f3f6e5c5c5e5e5c5e5c5e5c5e5c5e5c5e5" target="_blank" class="link-card">
+        <span class="emoji-big">🌟</span>
+        <span>时代少年团</span>
+        <span class="link-name">超话</span>
+      </a>
+      <!-- 额外追星物料：B站时代少年团频道 -->
+      <a href="https://search.bilibili.com/all?keyword=%E6%97%B6%E4%BB%A3%E5%B0%91%E5%B9%B4%E5%9B%A2" target="_blank" class="link-card">
+        <span class="emoji-big">🎬</span>
+        <span>时团物料</span>
+        <span class="link-name">B站汇总</span>
+      </a>
+    </div>
+
+    <!-- 求职专区 -->
+    <div class="section-title">
+      <span>💼 求职 · 冲冲冲</span>
+      <span style="font-size: 16px; background: #d9e6ff; padding: 0 14px; border-radius: 30px;">Offer 快来</span>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.zhipin.com" target="_blank" class="link-card">
+        <span class="emoji-big">📋</span>
+        <span>BOSS直聘</span>
+        <span class="link-name">Boss</span>
+      </a>
+      <a href="https://www.zhaopin.com" target="_blank" class="link-card">
+        <span class="emoji-big">📄</span>
+        <span>智联招聘</span>
+        <span class="link-name">Zhaopin</span>
+      </a>
+      <a href="https://www.lagou.com" target="_blank" class="link-card">
+        <span class="emoji-big">🚀</span>
+        <span>拉勾招聘</span>
+        <span class="link-name">Lagou</span>
+      </a>
+      <a href="https://www.51job.com" target="_blank" class="link-card">
+        <span class="emoji-big">📌</span>
+        <span>前程无忧</span>
+        <span class="link-name">51Job</span>
+      </a>
+      <!-- 再加一个牛客网，方便刷题 -->
+      <a href="https://www.nowcoder.com" target="_blank" class="link-card">
+        <span class="emoji-big">🧠</span>
+        <span>牛客网</span>
+        <span class="link-name">Nowcoder</span>
+      </a>
+    </div>
+
+    <!-- 额外常用链接 (可自定义) -->
+    <div class="section-title">
+      <span>🧁 其他小工具</span>
+    </div>
+    <div class="link-grid">
+      <a href="https://www.qq.com" target="_blank" class="link-card">
+        <span class="emoji-big">🐧</span>
+        <span>腾讯网</span>
+        <span class="link-name">QQ</span>
+      </a>
+      <a href="https://www.zhihu.com" target="_blank" class="link-card">
+        <span class="emoji-big">❓</span>
+        <span>知乎</span>
+        <span class="link-name">Zhihu</span>
+      </a>
+      <a href="https://www.douyin.com" target="_blank" class="link-card">
+        <span class="emoji-big">🎵</span>
+        <span>抖音</span>
+        <span class="link-name">TikTok</span>
+      </a>
+      <a href="https://www.taobao.com" target="_blank" class="link-card">
+        <span class="emoji-big">🛒</span>
+        <span>淘宝</span>
+        <span class="link-name">Taobao</span>
+      </a>
+      <a href="https://www.jd.com" target="_blank" class="link-card">
+        <span class="emoji-big">📦</span>
+        <span>京东</span>
+        <span class="link-name">JD</span>
+      </a>
+    </div>
+
+    <!-- 页脚 可爱语录 -->
+    <div class="footer">
+      <span>🌸 今天也是元气满满的一天</span>
+      <span>✨ 追星 & 求职 两不误</span>
+      <span>🎀 小星专属导航 v1.0</span>
+    </div>
+  </div>
+
+  <!-- 额外二次元装饰 (浮动小元素) -->
+  <div style="position: fixed; bottom: 30px; left: 20px; font-size: 36px; opacity: 0.2; pointer-events: none; z-index: 1;">🍭</div>
+  <div style="position: fixed; top: 80px; right: 20px; font-size: 48px; opacity: 0.15; pointer-events: none; z-index: 1;">🎀</div>
+  <div style="position: fixed; bottom: 100px; right: 60px; font-size: 28px; opacity: 0.2; pointer-events: none; z-index

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>· 臻品奢汇 · 高端代购</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212; /* 深色底 */
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px 16px 40px;
+      color: #f0f0f0;
+      line-height: 1.4;
+    }
+
+    /* 主卡片 —— 模拟手机内的高级感容器 */
+    .app-container {
+      max-width: 480px;
+      width: 100%;
+      background-color: #1d1d1d; /* 深灰黑 */
+      border-radius: 32px;
+      padding: 28px 20px 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03);
+      transition: all 0.2s;
+    }
+
+    /* 头部 */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 28px;
+      border-bottom: 1px solid #2d2d2d;
+      padding-bottom: 12px;
+    }
+
+    .shop-name {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: #e5e5e5;
+    }
+    .shop-name small {
+      font-size: 14px;
+      font-weight: 300;
+      color: #a0a0a0;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .tag {
+      background-color: #2a2a2a;
+      padding: 6px 14px;
+      border-radius: 40px;
+      color: #c0c0c0;
+      font-size: 13px;
+      font-weight: 400;
+      border: 0.5px solid #3a3a3a;
+      white-space: nowrap;
+    }
+
+    /* 轮播区域 —— 左右滑动 + 大图 */
+    .carousel-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      background-color: #161616;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .carousel-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      /* 隐藏滚动条但保留功能 (视觉干净) */
+      scrollbar-width: none; /* firefox */
+      -ms-overflow-style: none; /* ie */
+    }
+    .carousel-scroll::-webkit-scrollbar {
+      display: none; /* chrome/safari */
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px 18px;
+      box-sizing: border-box;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      max-height: 340px;
+      object-fit: contain;
+      border-radius: 20px;
+      background-color: #1a1a1a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+      pointer-events: none; /* 避免拖动时误触 */
+    }
+
+    /* 图片下的信息：大号字 */
+    .slide-info {
+      width: 100%;
+      margin-top: 18px;
+      padding: 0 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 500;
+      color: #e8e8e8;
+      letter-spacing: 0.8px;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 600;
+      color: #d4af7a; /* 淡金色，低调奢华 */
+      letter-spacing: 1px;
+    }
+    .price small {
+      font-size: 16px;
+      font-weight: 300;
+      color: #a0a0a0;
+      margin-left: 6px;
+    }
+
+    /* 轮播指示器 (小圆点) */
+    .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 20px;
+      background-color: #3a3a3a;
+      transition: all 0.2s;
+    }
+    .indicator.active {
+      background-color: #d4af7a;
+      width: 24px;
+    }
+
+    /* 联系按钮 —— 加微信 */
+    .wechat-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background-color: #2b2b2b;
+      border: 0.5px solid #4a4a4a;
+      border-radius: 60px;
+      padding: 18px 10px;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      font-size: 22px;
+      font-weight: 450;
+      color: #e5e5e5;
+      backdrop-filter: blur(4px);
+      transition: background 0.15s, border-color 0.2s;
+      cursor: default; /* 真实按钮可点击，但无功能演示 */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      letter-spacing: 1px;
+    }
+    .wechat-btn:active {
+      background-color: #3a3a3a;
+      border-color: #d4af7a;
+    }
+    .wechat-btn span {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .wechat-btn .icon {
+      display: inline-block;
+      background: #2b2b2b;
+      padding: 4px 8px;
+      border-radius: 40px;
+      font-size: 26px;
+    }
+
+    /* 辅助文案 */
+    .footnote {
+      text-align: center;
+      font-size: 15px;
+      color: #6a6a6a;
+      margin-top: 16px;
+      border-top: 0.5px solid #2a2a2a;
+      padding-top: 18px;
+      letter-spacing: 0.5px;
+    }
+    .footnote a {
+      color: #b0b0b0;
+      text-decoration: none;
+      border-bottom: 0.5px solid #4a4a4a;
+    }
+
+    /* 保证大字号、清晰 */
+    h1, h2, h3, p, div, span {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 400px) {
+      .app-container {
+        padding: 20px 14px 30px;
+      }
+      .shop-name {
+        font-size: 24px;
+      }
+      .brand-name {
+        font-size: 20px;
+      }
+      .price {
+        font-size: 22px;
+      }
+      .wechat-btn {
+        font-size: 20px;
+        padding: 16px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 头部：店名 + 代购标签 -->
+    <div class="header">
+      <div class="shop-name">
+        臻·奢<small>郑州代购</small>
+      </div>
+      <div class="tag">只供太太</div>
+    </div>
+
+    <!-- 轮播区块 -->
+    <div class="carousel-wrapper">
+      <div class="carousel-scroll" id="carouselScroll">
+        <!-- 第1张 -->
+        <div class="carousel-slide">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23252525'/%3E%3Ctext x='40' y='160' font-family='Arial' font-size='38' fill='%23d4af7a' font-weight='500'%3E👜 凯莉包%3C/text%3E%3Ctext x='40' y='210' font-family='Arial' font-size='22' fill='%23b0b0b0'%3E经典大象灰%3C/text%3E%3C/svg%3E"
+               alt="Hermès Kelly 凯莉包" loading="lazy">
+          <div class="slide-info">
+            <div class="brand-name">Hermès · Kelly</div>
+            <div class="price">¥ 86,500 <small>含税</small></div>
+          </div>
+        </div>
+        <!-- 第2张 -->
+        <div class="carousel-slide">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23202020'/%3E%3Ctext x='40' y='160' font-family='Arial' font-size='38' fill='%23d4af7a' font-weight='500'%3E👛 2.55 手袋%3C/text%3E%3Ctext x='40' y='210' font-family='Arial' font-size='22' fill='%23b0b0b0'%3E黑金 复古做旧%3C/text%3E%3C/svg%3E"
+               alt="Chanel 2.55 手袋" loading="lazy">
+          <div class="slide-info">
+            <div class="brand-name">Chanel · 2.55</div>
+            <div class="price">¥ 49,800 <small>限量</small></div>
+          </div>
+        </div>
+        <!-- 第3张 -->
+        <div class="carousel-slide">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%231e1e1e'/%3E%3Ctext x='40' y='160' font-family='Arial' font-size='38' fill='%23d4af7a' font-weight='500'%3E🧳 马鞍包%3C/text%3E%3Ctext x='40' y='210' font-family='Arial' font-size='22' fill='%23b0b0b0'%3E老花拼皮 中古%3C/text%3E%3C/svg%3E"
+               alt="Dior 马鞍包" loading="lazy">
+          <div class="slide-info">
+            <div class="brand-name">Dior · Saddle</div>
+            <div class="price">¥ 33,200 <small>稀缺</small></div>
+          </div>
+        </div>
+        <!-- 第4张 -->
+        <div class="carousel-slide">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%232c2c2c'/%3E%3Ctext x='40' y='160' font-family='Arial' font-size='38' fill='%23d4af7a' font-weight='500'%3E👜 托特包%3C/text%3E%3Ctext x='40' y='210' font-family='Arial' font-size='22' fill='%23b0b0b0'%3E黑色老花 大号%3C/text%3E%3C/svg%3E"
+               alt="Louis Vuitton Neverfull" loading="lazy">
+          <div class="slide-info">
+            <div class="brand-name">LV · Neverfull</div>
+            <div class="price">¥ 15,800 <small>中号</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 指示器（小圆点） -->
+      <div class="carousel-indicators" id="indicators">
+        <span class="indicator active" data-index="0"></span>
+        <span class="indicator" data-index="1"></span>
+        <span class="indicator" data-index="2"></span>
+        <span class="indicator" data-index="3"></span>
+      </div>
+    </div>
+
+    <!-- 加微信按钮（点击后模拟加微信） -->
+    <div class="wechat-btn" id="wechatBtn">
+      <span>💬</span> 加微信 · 问细节
+      <span style="font-size:20px; margin-left:6px;">🤝</span>
+    </div>
+    <div style="font-size: 14px; color: #5a5a5a; text-align: center; margin-top: -4px; letter-spacing: 0.3px;">
+      郑州本地 · 专柜代购 · 支持鉴定
+    </div>
+
+    <!-- 脚注 -->
+    <div class="footnote">
+      <span>📱 24小时在线 ｜ 太太专属</span><br>
+      <span style="font-size: 13px; color: #555;">（点击上方按钮复制微信号）</span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // 获取轮播元素和指示器
+      const carousel = document.getElementById('carouselScroll');
+      const indicators = document.querySelectorAll('.indicator');
+      const slides = document.querySelectorAll('.carousel-slide');
+      const wechatBtn = document.getElementById('wechatBtn');
+
+      // 当前索引 (用于指示器同步)
+      let currentIndex = 0;
+      let slideCount = slides.length;
+
+      // 更新指示器高亮
+      function updateIndicators(index) {
+        indicators.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+        currentIndex = index;
+      }
+
+      // 监听滚动事件，根据滚动位置判断当前显示第几张 (基于scroll-snap)
+      function handleCarouselScroll() {
+        if (!carousel) return;
+        const scrollLeft = carousel.scrollLeft;
+        const slideWidth = carousel.clientWidth;
+        if (slideWidth === 0) return;
+        // 计算最接近的索引
+        const approxIndex = Math.round(scrollLeft / slideWidth);
+        const index = Math.min(slideCount - 1, Math.max(0, approxIndex));
+        if (index !== currentIndex) {
+          updateIndicators(index);
+        }
+      }
+
+      // 添加滚动监听 (节流)
+      let ticking = false;
+      carousel.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            handleCarouselScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // 点击指示器跳转到对应幻灯片 (增强交互)
+      indicators.forEach((dot, idx) => {
+        dot.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (!carousel) return;
+          const slideWidth = carousel.clientWidth;
+          carousel.scrollTo({
+            left: slideWidth * idx,
+            behavior: 'smooth'
+          });
+          updateIndicators(idx);
+        });
+      });
+
+      // 加微信按钮 —— 提示微信号 (模拟加微信，不收费)
+      wechatBtn.addEventListener('click', function() {
+        // 模拟微信号 (高端代购)
+        const wechatId = 'ZhenShe_Hermes';
+        // 尝试复制到剪贴板 (如果可用)
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(wechatId).then(() => {
+            alert(`✅ 已复制微信号：${wechatId}\n请打开微信搜索添加，备注“太太”`);
+          }).catch(() => {
+            alert(`💎 微信号：${wechatId}\n请手动复制添加，尊享VIP服务`);
+          });
+        } else {
+          // 降级方案
+          alert(`💎 添加微信 · 问细节\n微信号
