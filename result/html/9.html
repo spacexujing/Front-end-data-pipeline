@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐小日常导航⭐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f0e6ff 0%, #e6f2ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 30px 40px 40px;
+            box-shadow: 0 12px 30px rgba(180, 150, 210, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #7b68b0;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .sub {
+            font-size: 0.9rem;
+            color: #a89cc8;
+            margin-bottom: 25px;
+            border-left: 4px solid #b8a9d4;
+            padding-left: 12px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #7b68b0;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 16px 22px;
+            box-shadow: 0 4px 12px rgba(160, 130, 200, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: 1px solid rgba(200, 180, 230, 0.2);
+            flex: 0 0 auto;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(160, 130, 200, 0.18);
+            border-color: #c9b8e6;
+        }
+
+        .card-icon {
+            width: 28px;
+            height: 28px;
+            background: #f0ebff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #8b7ab3;
+        }
+
+        .card-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4a3f5e;
+        }
+
+        .card-badge {
+            background: #dccff0;
+            color: #6b5a8a;
+            font-size: 0.7rem;
+            border-radius: 30px;
+            padding: 2px 10px;
+            margin-left: 6px;
+        }
+
+        .two-column {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .link-list {
+            background: rgba(245, 240, 255, 0.5);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid #e0d6f0;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 6px;
+            border-bottom: 1px solid #eee6f8;
+            font-size: 0.9rem;
+        }
+
+        .link-item:last-child {
+            border-bottom: none;
+        }
+
+        .link-item a {
+            text-decoration: none;
+            color: #5e4f7a;
+            font-weight: 450;
+            transition: color 0.2s;
+        }
+
+        .link-item a:hover {
+            color: #9b7fc7;
+        }
+
+        .link-tag {
+            background: #e6dcf5;
+            border-radius: 30px;
+            padding: 2px 12px;
+            font-size: 0.7rem;
+            color: #6b5a8a;
+        }
+
+        .fortune-box {
+            background: #f5efff;
+            border-radius: 28px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 10px;
+            border: 1px solid #dccff0;
+        }
+
+        .fortune-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .fortune-emoji {
+            font-size: 2.2rem;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(160, 130, 200, 0.1);
+        }
+
+        .fortune-text h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #7b68b0;
+            margin-bottom: 4px;
+        }
+
+        .fortune-text p {
+            font-size: 0.85rem;
+            color: #8b7ab3;
+        }
+
+        .sign-btn {
+            background: #b8a9d4;
+            border: none;
+            color: white;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(160, 130, 200, 0.2);
+        }
+
+        .sign-btn:hover {
+            background: #9b84c2;
+            transform: scale(1.02);
+        }
+
+        .sign-btn:active {
+            transform: scale(0.97);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #b8a9d4;
+            margin-top: 28px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .grid {
+                gap: 10px;
+            }
+            .card {
+                padding: 12px 16px;
+            }
+            .fortune-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>✨ 小日常 · 导航站</h1>
+    <div class="sub">⭐ 时代少年团 · 奶蓝心情簿</div>
+
+    <!-- 常用网站 -->
+    <div class="section-title"><span>🚀</span> 一键冲浪</div>
+    <div class="grid">
+        <div class="card" onclick="window.open('https://www.bilibili.com','_blank')">
+            <div class="card-icon">📺</div>
+            <span class="card-name">B站</span>
+            <span class="card-badge">舞台</span>
+        </div>
+        <div class="card" onclick="window.open('https://www.xiaohongshu.com','_blank')">
+            <div class="card-icon">📕</div>
+            <span class="card-name">小红书</span>
+            <span class="card-badge">安利</span>
+        </div>
+        <div class="card" onclick="window.open('https://weibo.com','_blank')">
+            <div class="card-icon">💬</div>
+            <span class="card-name">微博</span>
+            <span class="card-badge">超话</span>
+        </div>
+        <div class="card" onclick="window.open('https://music.163.com','_blank')">
+            <div class="card-icon">🎵</div>
+            <span class="card-name">网易云</span>
+            <span class="card-badge">新歌</span>
+        </div>
+    </div>
+
+    <!-- 时代少年团收藏夹 + 每日运势/签到 -->
+    <div class="two-column">
+        <!-- 收藏夹 -->
+        <div class="column">
+            <div class="section-title"><span>🌟</span> 时代少年团 · 收藏夹</div>
+            <div class="link-list">
+                <div class="link-item">
+                    <a href="https://www.bilibili.com/video/BV1GJ411x7aX" target="_blank">🎤 舞台 · 无尽的冒险</a>
+                    <span class="link-tag">必看</span>
+                </div>
+                <div class="link-item">
+                    <a href="https://www.bilibili.com/video/BV1Qf4y1S7kD" target="_blank">💃 舞台 · 爆米花</a>
+                    <span class="link-tag">直拍</span>
+                </div>
+                <div class="link-item">
+                    <a href="https://weibo.com/u/7379872210" target="_blank">📱 超话 · 时代少年团</a>
+                    <span class="link-tag">每日</span>
+                </div>
+                <div class="link-item">
+                    <a href="https://weibo.com/u/7517944159" target="_blank">✨ 超话 · 舞台直拍</a>
+                    <span class="link-tag">收藏</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 每日运势 / 心情签到 -->
+        <div class="column">
+            <div class="section-title"><span>🍀</span> 今日心情·签到</div>
+            <div class="fortune-box" id="fortuneBox">
+                <div class="fortune-left">
+                    <div class="fortune-emoji" id="fortuneEmoji">🌈</div>
+                    <div class="fortune-text">
+                        <h3 id="fortuneTitle">今日运势</h3>
+                        <p id="fortuneDesc">点击签到 开启小幸运</p>
+                    </div>
+                </div>
+                <button class="sign-btn" id="signBtn">✏️ 签到 · 领好运</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">🌸 每天都有小确幸 · 时代少年团陪你</div>
+</div>
+
+<script>
+    (function() {
+        const fortuneEmoji = document.getElementById('fortuneEmoji');
+        const fortuneTitle = document.getElementById('fortuneTitle');
+        const fortuneDesc = document.getElementById('fortuneDesc');
+        const signBtn = document.getElementById('signBtn');
+
+        // 预设运势库
+        const fortunes = [
+            { emoji: '🌈', title: '彩虹好运', desc: '今天会有意外惊喜！也许能刷到新舞台~' },
+            { emoji: '☁️', title: '软萌云朵', desc: '心情软绵绵，适合看直拍治愈一下' },
+            { emoji: '✨', title: '星光闪耀', desc: '像少年们一样闪闪发光！冲超话去' },
+            { emoji: '🌸', title: '春日花见', desc: '适合循环播放新歌，运气up up' },
+            { emoji: '🍀', title: '四叶草日', desc: '幸运值满分！快去签收今日份快乐' },
+            { emoji: '🎵', title: '音符跳跃', desc: '旋律环绕，今天适合重温经典舞台' },
+            { emoji: '💜', title: '薰衣草梦', desc: '温柔的一天，点开收藏夹收获治愈' },
+        ];
+
+        // 检查是否已经签到（localStorage）
+        const today = new Date().toISOString().slice(0, 10);
+        const signedDate = localStorage.getItem('signedDate');
+        const signedIndex = localStorage.getItem('signedIndex');
+
+        if (signedDate === today && signedIndex !== null) {
+            // 已签到，显示保存的运势
+            const idx = parseInt(signedIndex, 10);
+            const f = fortunes[idx % fortunes.length];
+            fortuneEmoji.textContent = f.emoji;
+            fortuneTitle.textContent = f.title;
+            fortuneDesc.textContent = f.desc + ' (已签到)';
+            signBtn.textContent = '✅ 已签到';
+            signBtn.disabled = true;
+            signBtn.style.opacity = '0.7';
+            signBtn.style.cursor = 'default';
+        } else {
+            // 未签到，随机显示一条（但未锁定）
+            const randomIdx = Math.floor(Math.random() * fortunes.length);
+            const f = fortunes[randomIdx];
+            fortuneEmoji.textContent = f.emoji;
+            fortuneTitle.textContent = f.title;
+            fortuneDesc.textContent = f.desc;
+            // 存储随机索引，但签到后才锁定
+            window._tempFortuneIdx = randomIdx;
+        }
+
+        // 签到点击事件
+        signBtn.addEventListener('click', function() {
+            if (signBtn.disabled) return;
+
+            const today = new Date().toISOString().slice(0, 10);
+            // 如果没有临时索引则随机
+            let idx = window._tempFortuneIdx;
+            if (idx === undefined) {
+                idx = Math.floor(Math.random() * fortunes.length);
+            }
+            const f = fortunes[idx % fortunes.length];
+
+            // 更新UI
+            fortuneEmoji.textContent = f.emoji;
+            fortuneTitle.textContent = f.title;
+            fortuneDesc.textContent = f.desc + ' (已签到)';
+            signBtn.textContent = '✅ 已签到';
+            signBtn.disabled = true;
+            signBtn.style.opacity = '0.7';
+            signBtn.style.cursor = 'default';
+
+            // 保存到localStorage
+            localStorage.setItem('signedDate', today);
+            localStorage.setItem('signedIndex', idx.toString());
+
+            // 小动画反馈
+            fortuneEmoji.style.transform = 'scale(1.2)';
+            setTimeout(() => { fortuneEmoji.style.transform = 'scale(1)'; }, 300);
+        });
+    })();
+</script>
+</body>
+</html>

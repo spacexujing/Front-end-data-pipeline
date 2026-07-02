@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teens' Pick · 时代少年团周边</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #faf7f2;
+      color: #2d2a26;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* 导航栏 */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #e8e2d9;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+      color: #3d352e;
+    }
+    .logo span {
+      color: #b8a694;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #5a524a;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #3d352e;
+    }
+
+    .cart-icon {
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .cart-icon:hover {
+      opacity: 1;
+    }
+
+    /* 分类筛选栏 */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin: 32px 0 40px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 20px;
+      border: 1px solid #d6cec3;
+      border-radius: 30px;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5a524a;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #3d352e;
+      color: #faf7f2;
+      border-color: #3d352e;
+    }
+
+    /* 热销区域标题 */
+    .section-title {
+      font-size: 26px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+    }
+    .section-title small {
+      font-size: 16px;
+      font-weight: 400;
+      color: #8a8076;
+      margin-left: 8px;
+    }
+
+    /* 商品网格 */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 220px;
+      background: #e8e2d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: #b8a694;
+    }
+    /* 模拟图片占位 */
+    .product-image .placeholder {
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .product-info {
+      padding: 16px 18px 20px;
+    }
+    .product-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .product-member {
+      font-size: 13px;
+      color: #8a8076;
+      margin-bottom: 10px;
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: 600;
+      color: #3d352e;
+    }
+    .product-price small {
+      font-size: 13px;
+      font-weight: 400;
+      color: #b8a694;
+      text-decoration: line-through;
+      margin-left: 8px;
+    }
+
+    /* 付款方式展示 */
+    .payment-section {
+      background: #f0ebe4;
+      border-radius: 16px;
+      padding: 32px 28px;
+      margin: 40px 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .payment-text {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .payment-icons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .payment-icons span {
+      background: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #3d352e;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .payment-icons .wechat {
+      background: #07c160;
+      color: white;
+    }
+    .payment-icons .alipay {
+      background: #1677ff;
+      color: white;
+    }
+
+    /* 页脚 */
+    footer {
+      text-align: center;
+      padding: 32px 0 24px;
+      border-top: 1px solid #e8e2d9;
+      font-size: 14px;
+      color: #8a8076;
+    }
+
+    /* 响应式 */
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-links {
+        gap: 20px;
+      }
+      .filter-bar {
+        justify-content: center;
+      }
+      .payment-section {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航 -->
+    <nav>
+      <div class="logo">Teens<span>'</span> Pick</div>
+      <ul class="nav-links">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">全部商品</a></li>
+        <li><a href="#">关于</a></li>
+      </ul>
+      <div class="cart-icon">🛒</div>
+    </nav>
+
+    <!-- 分类筛选 -->
+    <div class="filter-bar">
+      <button class="filter-btn active">全部</button>
+      <button class="filter-btn">马嘉祺</button>
+      <button class="filter-btn">丁程鑫</button>
+      <button class="filter-btn">宋亚轩</button>
+      <button class="filter-btn">刘耀文</button>
+      <button class="filter-btn">张真源</button>
+      <button class="filter-btn">严浩翔</button>
+      <button class="filter-btn">贺峻霖</button>
+    </div>
+
+    <!-- 热销商品 -->
+    <div class="section-title">🔥 热销周边 <small>今日热门</small></div>
+    <div class="product-grid">
+      <!-- 商品1 -->
+      <div class="product-card">
+        <div class="product-image"><span class="placeholder">📸</span></div>
+        <div class="product-info">
+          <div class="product-name">「破晓」小卡套装</div>
+          <div class="product-member">马嘉祺 · 限量版</div>
+          <div class="product-price">¥69 <small>¥89</small></div>
+        </div>
+      </div>
+      <!-- 商品2 -->
+      <div class="product-card">
+        <div class="product-image"><span class="placeholder">🖼️</span></div>
+        <div class="product-info">
+          <div class="product-name">「少年行」海报</div>
+          <div class="product-member">丁程鑫 · 签名款</div>
+          <div class="product-price">¥45 <small>¥59</small></div>
+        </div>
+      </div>
+      <!-- 商品3 -->
+      <div class="product-card">
+        <div class="product-image"><span class="placeholder">🎴</span></div>
+        <div class="product-info">
+          <div class="product-name">「星河」闪卡礼盒</div>
+          <div class="product-member">宋亚轩 · 特典</div>
+          <div class="product-price">¥128 <small>¥168</small></div>
+        </div>
+      </div>
+      <!-- 商品4 -->
+      <div class="product-card">
+        <div class="product-image"><span class="placeholder">📀</span></div>
+        <div class="product-info">
+          <div class="product-name">「青春」明信片册</div>
+          <div class="product-member">刘耀文 · 全团</div>
+          <div class="product-price">¥55</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 付款方式 -->
+    <div class="payment-section">
+      <div class="payment-text">💳 支持以下支付方式</div>
+      <div class="payment-icons">
+        <span class="wechat">微信支付</span>
+        <span class="alipay">支付宝</span>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>© 2025 Teens' Pick · 个人周边小店 · 所有商品均为正版</p>
+    </footer>
+  </div>
+</body>
+</html>

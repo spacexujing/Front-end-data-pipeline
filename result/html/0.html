@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizSpeak 商务英语社团</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Inter', sans-serif;
+      background: #f4f8fc;
+      color: #1a2b3c;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0a2a44 0%, #1b4f72 100%);
+      color: white;
+      padding: 60px 0 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: #f4f8fc;
+      border-radius: 50% 50% 0 0;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Section styles */
+    section { padding: 60px 0; }
+    h2 {
+      font-size: 2rem;
+      color: #0a2a44;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+    }
+    h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #3a8fcb;
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .about-stats {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+    .stat-item {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(10, 42, 68, 0.08);
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-size: 2.5rem;
+      color: #0a2a44;
+    }
+    .stat-item p {
+      color: #5a6b7c;
+      font-weight: 500;
+    }
+
+    /* Activities */
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .activity-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      transition: transform 0.2s ease;
+    }
+    .activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(10, 42, 68, 0.12);
+    }
+    .activity-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    .activity-card h3 {
+      font-size: 1.4rem;
+      color: #0a2a44;
+      margin-bottom: 10px;
+    }
+    .activity-card p {
+      color: #3d4e5f;
+    }
+
+    /* Join */
+    .join-section {
+      background: linear-gradient(135deg, #e8f0f8 0%, #d4e4f0 100%);
+      border-radius: 40px;
+      padding: 50px 40px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .join-section h2 {
+      color: #0a2a44;
+    }
+    .join-section h2::after { margin: 8px auto 0; }
+    .join-btn {
+      display: inline-block;
+      background: #0a2a44;
+      color: white;
+      padding: 14px 48px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .join-btn:hover {
+      background: #1b4f72;
+      transform: scale(1.02);
+    }
+
+    /* Floating QR */
+    .float-qr {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: white;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+      width: 140px;
+      text-align: center;
+      z-index: 100;
+      transition: opacity 0.3s;
+    }
+    .float-qr img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .float-qr p {
+      font-size: 0.8rem;
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a2a44;
+      color: #a0b8cc;
+      text-align: center;
+      padding: 30px 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .activity-grid { grid-template-columns: 1fr; }
+      header h1 { font-size: 2.2rem; }
+      .float-qr { width: 100px; padding: 10px; right: 15px; bottom: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>BizSpeak</h1>
+    <p>商务英语社团 · 连接语言与商业的未来</p>
+  </div>
+</header>
+
+<section class="container">
+  <h2>关于我们</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>BizSpeak 是商务英语专业学生创立的学术社团，致力于通过实战项目、行业沙龙和跨文化工作坊，提升成员的商务沟通与职场竞争力。</p>
+      <p>我们相信语言是商业的桥梁，在这里，你不仅能锻炼英语，更能提前触碰真实商业世界。</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <h3>120+</h3>
+        <p>活跃成员</p>
+      </div>
+      <div class="stat-item">
+        <h3>16</h3>
+        <p>年度活动</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h2>精彩活动</h2>
+  <div class="activity-grid">
+    <div class="activity-card">
+      <div class="activity-icon">🗣️</div>
+      <h3>模拟商务谈判</h3>
+      <p>全英文模拟跨国谈判，体验真实商业博弈，提升应变与逻辑。</p>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon">🌍</div>
+      <h3>文化沙龙</h3>
+      <p>邀请外企HR、留学生分享跨文化职场经验，拓宽国际视野。</p>
+    </div>
+    <div class="activity-card">
+      <div class="activity-icon">📊</div>
+      <h3>案例工作坊</h3>
+      <p>小组分析商业案例，用英语展示方案，打磨团队协作与表达。</p>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="join-section">
+    <h2>加入我们</h2>
+    <p style="font-size: 1.1rem; color: #2c3e50; max-width: 500px; margin: 10px auto;">无论你是商务英语专业还是对商业沟通感兴趣，我们都欢迎你！</p>
+    <a href="#" class="join-btn">填写招新表</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 BizSpeak 商务英语社团 | 联系：bizspeak@univ.edu</p>
+  </div>
+</footer>
+
+<!-- 浮动二维码窗口 -->
+<div class="float-qr">
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://t.me/your_group_link" alt="招新群二维码">
+  <p>扫码加入招新群</p>
+</div>
+
+</body>
+</html>

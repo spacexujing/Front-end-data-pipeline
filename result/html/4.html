@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的求职作品集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, sans-serif;
+            background-color: #fdf8f2;
+            color: #3a2e2a;
+            line-height: 1.6;
+        }
+        /* 暖色调主色：米白 #fdf8f2, 暖灰 #d9c9b8, 浅橙红 #e07a5f */
+        a {
+            color: #e07a5f;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #c25a3f;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* 导航 */
+        nav {
+            background-color: #f5ede4;
+            padding: 15px 0;
+            border-bottom: 2px solid #d9c9b8;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #e07a5f;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        nav ul li a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        nav ul li a:hover {
+            border-bottom-color: #e07a5f;
+        }
+        /* 首页英雄区 */
+        .hero {
+            background: linear-gradient(rgba(253, 248, 242, 0.6), rgba(253, 248, 242, 0.8)), url('https://picsum.photos/seed/songyaxuan/1200/600') no-repeat center center/cover;
+            /* 使用宋亚轩占位图，建议替换为真实图片 */
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 3px solid #d9c9b8;
+        }
+        .hero-content {
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 40px 50px;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #3a2e2a;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            color: #5c4d44;
+            max-width: 600px;
+        }
+        /* 通用标题 */
+        h2 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #3a2e2a;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 4px;
+            background: #e07a5f;
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #4a3e38;
+            margin-bottom: 15px;
+        }
+        h4 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #5c4d44;
+            margin-bottom: 10px;
+        }
+        /* 区块 */
+        section {
+            padding: 70px 0;
+        }
+        .section-light {
+            background-color: #f9f1e9;
+        }
+        .section-white {
+            background-color: #ffffff;
+        }
+        /* 视频区 */
+        .video-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+        }
+        /* 简历卡片 */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .resume-card {
+            background: #fdf8f2;
+            padding: 30px;
+            border-radius: 16px;
+            border-left: 6px solid #e07a5f;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .resume-card:hover {
+            transform: translateY(-4px);
+        }
+        .resume-card ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .resume-card ul li {
+            padding: 6px 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #d9c9b8;
+        }
+        .resume-card ul li:last-child {
+            border-bottom: none;
+        }
+        /* 项目展示 */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .project-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #e8ddd0;
+            transition: 0.3s;
+        }
+        .project-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border-color: #e07a5f;
+        }
+        .project-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .project-card .tag {
+            display: inline-block;
+            background: #e07a5f;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .project-card p {
+            font-size: 1rem;
+            color: #5c4d44;
+        }
+        /* 页脚 */
+        footer {
+            background-color: #3a2e2a;
+            color: #d9c9b8;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.95rem;
+        }
+        footer a {
+            color: #e07a5f;
+        }
+        /* 响应式 */
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .resume-grid {
+                grid-template-columns: 1fr;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">我的作品集</div>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#video">自我介绍</a></li>
+                <li><a href="#resume">简历</a></li>
+                <li><a href="#projects">项目展示</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>你好，我是应届生</h1>
+            <p>商务英语专业 · 热爱沟通与创造 · 求职作品集</p>
+            <p style="margin-top:15px; font-size:1rem;">背景图：宋亚轩（可替换为真实图片）</p>
+        </div>
+    </section>
+
+    <section id="video" class="section-light">
+        <div class="container" style="text-align:center;">
+            <h2>自我介绍视频</h2>
+            <p style="margin-bottom:30px; font-size:1.1rem; color:#5c4d44;">一段简短的视频，让你更了解我</p>
+            <div class="video-wrapper">
+                <video controls poster="https://via.placeholder.com/800x450.png?text=Video+Placeholder">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+            </div>
+            <p style="margin-top:15px; color:#7a6b60;">（示例视频，请替换为你的自我介绍视频）</p>
+        </div>
+    </section>
+
+    <section id="resume" class="section-white">
+        <div class="container">
+            <h2>简历概览</h2>
+            <div class="resume-grid">
+                <div class="resume-card">
+                    <h3>教育背景</h3>
+                    <ul>
+                        <li><strong>XX大学</strong> 商务英语专业 本科 (2021-2025)</li>
+                        <li>GPA: 3.8/4.0 · 专业前10%</li>
+                        <li>英语专业四级 (良好) · 雅思7.5</li>
+                    </ul>
+                </div>
+                <div class="resume-card">
+                    <h3>技能与证书</h3>
+                    <ul>
+                        <li>商务英语沟通 · 跨文化交际</li>
+                        <li>Microsoft Office · Photoshop 基础</li>
+                        <li>BEC高级 · 普通话二甲</li>
+                    </ul>
+                </div>
+                <div class="resume-card">
+                    <h3>实习经历</h3>
+                    <ul>
+                        <li>XX贸易公司 外贸助理 (2024.06-2024.09)</li>
+                        <li>负责客户邮件往来、订单跟进</li>
+                        <li>参与两次国际展会翻译</li>
+                    </ul>
+                </div>
+                <div class="resume-card">
+                    <h3>获奖情况</h3>
+                    <ul>
+                        <li>全国商务英语实践大赛 华东区一等奖</li>
+                        <li>校英语演讲比赛 亚军</li>
+                        <li>优秀学生干部 (连续两年)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-light">
+        <div class="container">
+            <h2>商务英语项目展示</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <span class="tag">市场分析</span>
+                    <h4>跨境电商品牌出海方案</h4>
+                    <p>针对东南亚市场，为国内美妆品牌制定英文营销策略，包括竞品分析、社媒内容策划，最终方案获课程最佳。</p>
+                </div>
+                <div class="project-card">
+                    <span class="tag">商务谈判</span>
+                    <h4>模拟国际采购谈判</h4>
+                    <p>与团队模拟中德企业采购谈判，完成英文合同起草、价格磋商及风险条款讨论，获教授好评。</p>
+                </div>
+                <div class="project-card">
+                    <span class="tag">跨文化沟通</span>
+                    <h4>海外客户接待手册</h4>
+                    <p>编写英文版《中国商务礼仪指南》，涵盖餐饮、会议、礼品文化，用于公司新员工培训。</p>
+                </div>
+                <div class="project-card">
+                    <span class="tag">数字营销</span>
+                    <h4>LinkedIn企业号运营方案</h4>
+                    <p>为一家初创外贸公司设计LinkedIn内容日历，制作英文产品帖与行业洞察，一个月内粉丝增长30%。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 我的求职作品集 · 联系方式：<a href="mailto:example@email.com">example@email.com</a> · 背景图来源：宋亚轩</p>
+        </div>
+    </footer>
+</body>
+</html>

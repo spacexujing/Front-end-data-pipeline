@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechSupport Blog | AI工具体验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b1926; /* 深蓝底 */
+      color: #e0e6ed;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* 导航栏 */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 165, 0, 0.15);
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff8c00; /* 亮橙 */
+      letter-spacing: -0.5px;
+    }
+
+    .brand span {
+      color: #e0e6ed;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ff8c00;
+    }
+
+    /* 英雄区 */
+    .hero {
+      padding: 80px 0 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .hero h1 .highlight {
+      color: #ff8c00;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 600px;
+      color: #a0b3c9;
+      margin-bottom: 32px;
+    }
+
+    .cta-button {
+      background: #ff8c00;
+      color: #0b1926;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: #e67e00;
+      transform: translateY(-2px);
+    }
+
+    /* 文章区域 */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: #ff8c00;
+      border-radius: 2px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 80px;
+    }
+
+    .article-card {
+      background: #112233;
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid rgba(255, 140, 0, 0.08);
+    }
+
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 140, 0, 0.3);
+    }
+
+    .article-card .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #ff8c00;
+      background: rgba(255, 140, 0, 0.12);
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .article-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #f0f4fa;
+    }
+
+    .article-card p {
+      font-size: 0.9rem;
+      color: #8fa3bc;
+      margin-bottom: 16px;
+    }
+
+    .article-card .meta {
+      font-size: 0.8rem;
+      color: #6a7f9a;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* AI工具推荐 */
+    .tools-section {
+      margin-bottom: 80px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-item {
+      background: #112233;
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 140, 0, 0.1);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .tool-item:hover {
+      background: #1a2d44;
+      border-color: #ff8c00;
+    }
+
+    .tool-item .icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .tool-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .tool-item p {
+      font-size: 0.8rem;
+      color: #8fa3bc;
+    }
+
+    /* 底部联系 */
+    footer {
+      border-top: 1px solid rgba(255, 165, 0, 0.15);
+      padding: 40px 0 30px;
+      margin-top: 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-content h3 {
+      font-size: 1.3rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .footer-content p {
+      color: #a0b3c9;
+      font-size: 0.95rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .contact-links a {
+      color: #ff8c00;
+      font-weight: 500;
+      border: 1px solid rgba(255, 140, 0, 0.3);
+      padding: 8px 20px;
+      border-radius: 30px;
+      transition: all 0.2s;
+    }
+
+    .contact-links a:hover {
+      background: #ff8c00;
+      color: #0b1926;
+      border-color: #ff8c00;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #5a6f8a;
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 16px;
+      }
+      .nav-links {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <div class="brand">Tech<span>Support</span></div>
+      <ul class="nav-links">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">文章</a></li>
+        <li><a href="#">工具</a></li>
+        <li><a href="#">关于</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <h1>用 <span class="highlight">AI</span> 解决 IT 问题<br>顺便赢一场板球</h1>
+      <p>我是 RCB 的忠实支持者，也是 IT 支持工程师。这里分享我用 ChatGPT、Python 等工具自动化工单、提升效率的经验。</p>
+      <a href="#articles" class="cta-button">浏览最新文章</a>
+    </section>
+
+    <section id="articles">
+      <h2 class="section-title">最新文章</h2>
+      <div class="articles-grid">
+        <article class="article-card">
+          <span class="tag">Python</span>
+          <h3>用ChatGPT写脚本批量处理工单</h3>
+          <p>如何利用 GPT-4 生成 Python 脚本，自动分类和回复常见 IT 请求，节省 70% 时间。</p>
+          <span class="meta">2025-04-02 · 5 分钟阅读</span>
+        </article>
+        <article class="article-card">
+          <span class="tag">自动化</span>
+          <h3>AI 助手帮我调试网络故障</h3>
+          <p>分享一次使用 Claude 分析抓包文件，快速定位 DHCP 问题的真实案例。</p>
+          <span class="meta">2025-03-28 · 4 分钟阅读</span>
+        </article>
+        <article class="article-card">
+          <span class="tag">效率</span>
+          <h3>5 个提升 IT 支持效率的 AI 工具</h3>
+          <p>从对话式 AI 到代码生成，盘点我最常用的工具组合拳。</p>
+          <span class="meta">2025-03-20 · 6 分钟阅读</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="tools-section">
+      <h2 class="section-title">AI 工具推荐</h2>
+      <div class="tools-grid">
+        <div class="tool-item">
+          <div class="icon">🤖</div>
+          <h4>ChatGPT</h4>
+          <p>脚本生成、问题诊断、文档撰写</p>
+        </div>
+        <div class="tool-item">
+          <div class="icon">⚡</div>
+          <h4>Claude</h4>
+          <p>长文本分析、代码审查、逻辑推理</p>
+        </div>
+        <div class="tool-item">
+          <div class="icon">🐍</div>
+          <h4>GitHub Copilot</h4>
+          <p>代码补全、快速原型、自动化脚本</p>
+        </div>
+        <div class="tool-item">
+          <div class="icon">📊</div>
+          <h4>Notion AI</h4>
+          <p>工单总结、知识库整理、周报生成</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <h3>📬 联系我接外包</h3>
+        <p>IT 支持自动化 · Python 脚本 · AI 集成方案</p>
+        <div class="contact-links">
+          <a href="mailto:techsupport@example.com">📧 邮件联系</a>
+          <a href="#">💬 微信: TechSupport_AI</a>
+          <a href="#">🐦 推特: @techsupport_ai</a>
+        </div>
+        <div class="footer-note">© 2025 TechSupport Blog · 用AI让支持更简单</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
